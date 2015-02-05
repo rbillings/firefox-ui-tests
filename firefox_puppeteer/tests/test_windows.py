@@ -77,9 +77,6 @@ class TestWindows(FirefoxTestCase):
                           win1.send_shortcut, 'l', acel=True)
 
     def test_base_window_open_close(self):
-        def setUp(self):
-            FirefoxTestCase.setUp(self)
-
         # force BaseWindow instance
         win1 = BaseWindow(lambda: self.marionette, self.browser.handle)
 
@@ -177,7 +174,7 @@ class TestWindows(FirefoxTestCase):
         win2 = self.browser.open_browser(trigger='menu')
         self.assertEquals(win2, self.windows.current)
         self.assertFalse(self.browser.is_private)
-        win2.close()
+        win2.close(trigger='menu')
 
         # open and close a new browser window by shortcut
         win2 = self.browser.open_browser(trigger='shortcut')
