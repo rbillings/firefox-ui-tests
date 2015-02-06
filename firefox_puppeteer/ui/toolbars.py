@@ -31,6 +31,14 @@ class NavBar(BaseLib):
         return self.marionette.find_element(By.ID, 'forward-button')
 
     @property
+    def go_button(self):
+        """ Provides access to the go button from the navbar ui.
+
+        :returns: The go button element.
+        """
+        return self.marionette.find_element('id', 'urlbar-go-button')
+
+    @property
     def home_button(self):
         """Provides access to the DOM element home button in the navbar.
 
