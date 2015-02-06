@@ -81,7 +81,7 @@ class TestWindows(FirefoxTestCase):
         win1 = BaseWindow(lambda: self.marionette, self.browser.handle)
 
         # Open a new window (will be focused), and check states
-        win2 = self.browser.open_browser(trigger='menu')
+        win2 = win1.open_window()
 
         # force BaseWindow instance
         win2 = BaseWindow(lambda: self.marionette, win2.handle)
