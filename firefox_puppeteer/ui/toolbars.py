@@ -145,6 +145,14 @@ class LocationBar(BaseLib):
         return found[0] if len(found) else None
 
     @property
+    def go_button(self):
+        """Provides access to the DOM element go button.
+
+        :returns: Reference to the go button.
+        """
+        return self.marionette.find_element(By.ID, 'go_button')
+
+    @property
     def history_drop_marker(self):
         """Provides access to the history drop marker.
 

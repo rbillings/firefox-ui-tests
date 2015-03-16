@@ -29,13 +29,8 @@ class TestLocationBar(FirefoxTestCase):
         self.assertEqual(locationbar.value, '')
 
     def test_gobutton(self):
-        # This replaces http://hg.mozilla.org/qa/mozmill-tests/file/default/firefox/tests/functional/testAwesomeBar/testGoButton.js
-        input_text = 'mozilla.org/'
-        locationbar = self.browser.navbar.locationbar
-        locationbar.urlbar.send_keys(input_text)
-        go_button = self.browser.navbar.go_button
-        self.assertEqual(locationbar.value, 'mozilla.org/')
-        self.assertFalse(go_button.is_displayed())
+        gobutton = self.browser.navbar.go_button
+        self.assertEqual('toolbarbutton', go_button.get_attribute('localName'))
 
     def test_load_url(self):
         data_uri = 'data:text/html,<title>Title</title>'
