@@ -4,33 +4,28 @@
 
 from firefox_ui_harness.testcase import FirefoxTestCase
 
-from marionette_driver import By
+from marionette_driver import By, Wait
 
 
 class TestGoButton(FirefoxTestCase):
-    """ This replaces
-    This replaces http://hg.mozilla.org/qa/mozmill-tests/file/default/firefox/tests/functional/testAwesomeBar/testGoButton.js
-    Check a go button displays after text has been added to the awesome bar, takes user to correct results.
-    """
 
     def setUp(self):
         FirefoxTestCase.setUp(self)
+        self.url = self.marionette.absolute_url('layout/mozilla.html')
 
     def test_gobutton(self):
         # no input, go button should not display
-        go_button = self.browser.navbar.go_button
-        self.assertFalse(go_button.is_displayed())
+        go_button = self.browser.locationbar.go_button
+        self.assertEqual(go_button.element.get_attribute('state'), 'disabled')
 
         # add input, go button displays, click go button
-        input_text = 'mozilla.org/'
-        locationbar = self.browser.navbar.locationbar
-        locationbar.urlbar.send_keys(input_text)
-        go_button = self.marionette.find_element(By.ID, 'gobutton')
+        url = self.marionette.absolute_url('layout/mozilla.html')
+        urlbar.send_keys(url)
+        self.assertEqual(go_button.element.get_attribute('state'), 'active')
         go_button.click()
 
         # landing page matches input, go button no longer displays
-        self.assertEqual(locationbar.value, 'mozilla.org/')
+        target_url = self.browser.get_final_url(url)
+        Wait(self.marionette).until(lambda mn: mn.get_url() == target_url)
+        self.assertEqual(self.marionette.get_url(), self.url)
         self.assertFalse(go_button.is_displayed())
-
-    def tearDown(self):
-        FirefoxTestCase.tearDown(self)
